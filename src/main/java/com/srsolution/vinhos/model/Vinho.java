@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -15,13 +16,15 @@ import org.springframework.format.annotation.NumberFormat;
 
 
 @Entity
+@Table(name = "tabela_vinho")
 public class Vinho {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	@NotBlank(message = "Campo nome é obrigatório")
+	@NotBlank(message = "Campo Nome é obrigatório")
 	private String nome;
 	
 	@NotNull(message = "Campo Tipo de vinho é obrigatório")

@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
 	<section layout:fragment="conteudo">
 		
 		<div class="page-header">
@@ -23,15 +24,15 @@
 			
 			<div class="col-xs-10">
 				<h1>
-					Pesquisa de vinhos
+					Pesquisa de produtos
 				</h1>
 			</div>
 
 				<div class="col-xs-2">
 					<div class="aw-page-header-controls">
-						<a class="btn btn-primary" th:href="@{/vinhos/novo}" sec:authorize="hasRole('ROLE_CADASTRAR_VINHO')"> <i
+						<a class="btn btn-primary" th:href="@{/produtos/novo}"> <i
 							class="fa fa-plus-square"></i> <span
-							class="hidden-xs  hidden-sm">Novo Vinho</span>
+							class="hidden-xs  hidden-sm">Novo Produto</span>
 						</a>
 					</div>
 				</div>
@@ -57,12 +58,12 @@
 			</div>
 		
 		
-			<form method="GET" class="form-vertical js-form-loading" th:object="${vinhoFilter}">
+			<form method="GET" class="form-vertical js-form-loading" th:object="${produtoFilter}">
 			
 				<div class="form-group">
 					<div class="input-group">
 						<input id="nome" type="text" th:field="*{nome}" class="form-control" 
-						placeholder="Pesquise pelo nome..."/>
+						placeholder="Pesquise pelo nome do produto..."/>
 						
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="submit">
@@ -83,38 +84,40 @@
 						<tr>
 							<!-- <th class="av-table-vinhos-col-codigo">Código</th>-->
 							<th>Nome</th>
-							<th class="av-table-vinhos-col-tipo">Tipo</th>
+							<th class="av-table-vinhos-col-tipo text-center">Quantidade</th>
 							<th class="av-table-vinhos-col-valor">Valor</th>
-							<th class="av-table-vinhos-col-icons" sec:authorize="hasRole('ROLE_CADASTRAR_VINHO')"></th> 
+							<th class="av-table-vinhos-col-icons"></th> 
 						</tr>
 					</thead>
 					<tbody>
 					
-						<tr th:each="vinho : ${vinhos}">
+						<tr th:each="produto : ${produtos}">
 						
-							<!-- <td th:text="${vinho.codigo}" class="text-center">1</td> -->
+							<!-- <td th:text="$produto.codigo}" class="text-center">1</td> -->
 							
 							<td>
-								<a th:href="@{/vinhos/{codigo}(codigo=${vinho.codigo})}" th:text="${vinho.nome}" 
+								<a th:href="@{/produtos/{id}(id=${produto.id})}" th:text="${produto.nome}" 
 								   sec:authorize="hasRole('ROLE_CADASTRAR_VINHO')"></a>
-								<span th:text="${vinho.nome}" sec:authorize="not hasRole('ROLE_CADASTRAR_VINHO')"></span>
+								<span th:text="${produto.nome}" sec:authorize="not hasRole('ROLE_CADASTRAR_VINHO')"></span>
 							</td>
 							
-							<td th:text="#{|tipoVinho.${vinho.tipo}|}">Tinto</td>
+							<td th:text="|${{produto.quantidade}}|" class="text-center">Quantidade</td>
 							
-							<td th:text="|R$${{vinho.valor}}|" class="text-right">55,00</td>
+							<td th:text="|R$${{produto.valor}}|" class="text-right">55,00</td>
 							
 							<td class="text-center"
 								sec:authorize="hasRole('ROLE_CADASTRAR_VINHO')">
 								<i class="fa  fa-trash" style="cursor:pointer"
 								   data-toggle="modal" data-target="#confirmExclude"
-								   data:nome="${vinho.nome}"
-								   data:url-delete="@{/vinhos/{codigo}(codigo=${vinho.codigo})}"></i>
+								   data:nome="${produto.nome}"
+								   data:url-delete="@{/produtos/{id}(id=${produto.id})}"></i>
 							</td>
 						</tr>
-						<tr th:if="${vinhos.empty}">
-							<td colspan="5">Nenhum vinho cadastrado</td>
+						
+						<tr th:if="${produtos.empty}">
+							<td colspan="5">Nenhum produto cadastrado...</td>
 						</tr>
+						
 					</tbody>
 				</table>
 			</div>
@@ -129,7 +132,7 @@
 		  		
 		  		<div class="modal-content">
 		  			
-		  			<form th:action="@{/vinhos}" method="POST">
+		  			<form th:action="@{/produtos}" method="POST">
 		  				
 		  				<input type="hidden" name="_method" value="DELETE"/>
 		     			
@@ -138,7 +141,7 @@
 			       			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			       				<span aria-hidden="true">&times;</span>
 			       			</button>
-			       			<h4 class="modal-title" id="myModalLabel">Excluir vinho</h4>
+			       			<h4 class="modal-title" id="myModalLabel">Excluir Produto</h4>
 		     			</div>
 		     			
 		     			
@@ -146,7 +149,7 @@
 		       				<span>Conteudo dinamico</span>
 		     			</div>
 		     			
-		     			<!-- Botão de CANCELAR E EXCLUIR do MODAL -->
+		     			
 		     			<div class="modal-footer">
 		       				<button type="button" class="btn  btn-default" data-dismiss="modal">Cancelar</button>
 		       				<button type="submit" class="btn  btn-danger">Excluir</button>
@@ -157,9 +160,13 @@
 			</div>
 		</div>
 		
+		
 	</section>
 	
+	
+	
 	<th:block layout:fragment="javascript-extra">
+	
 		<script th:src="@{/javascripts/excluir-vinho-modal.js}"></script>
 	</th:block>
 	

@@ -1,64 +1,68 @@
 package com.srsolution.vinhos.model;
 
-import javax.persistence.Column;
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.NumberFormat;
+
 
 @Entity
-public class Aluno {
+@Table(name = "tabela_produto")
+public class Produto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotBlank
-	@Column(nullable = false, length = 100)
+	
+	@NotBlank(message = "Campo Nome é obrigatório")
 	private String nome;
-
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private SexoAluno sexo;
-
-	// Criando os GETTERS E SETTERS
-
+	
+	@NotNull(message = "Campo Quantidade é obrigatório")
+	private BigDecimal quantidade;
+	
+	@NotNull(message = "Campo Valor é obrigatório")
+	@Min(value = 0, message = "Valor dever ser acima de 0")
+	@NumberFormat(pattern = "#,##0.00")
+	private BigDecimal valor;
+	
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public SexoAluno getSexo() {
-		return sexo;
+	public BigDecimal getQuantidade() {
+		return quantidade;
 	}
-
-	public void setSexo(SexoAluno sexo) {
-		this.sexo = sexo;
+	public void setQuantidade(BigDecimal quantidade) {
+		this.quantidade = quantidade;
 	}
-
+	public BigDecimal getValor() {
+		return valor;
+	}
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
 	
 	
-	// Método HASHCODE & EQUALS
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -66,10 +70,6 @@ public class Aluno {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -78,7 +78,7 @@ public class Aluno {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Aluno other = (Aluno) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -86,10 +86,16 @@ public class Aluno {
 			return false;
 		return true;
 	}
+	
+	
 
 
 	
 	
 	
-
+	
+	
+	
+	
+	
 }

@@ -97,8 +97,8 @@
 
 						<li class="aw-menu__item"
 							sec:authorize="hasRole('ROLE_CADASTRAR_VINHO')"><a
-							th:href="@{/vinhos/novo}"><i class="fa fa-plus-square"></i><span>Cadastrar
-									Vinhos</span></a></li>
+							th:href="@{/vinhos/novo}"><i class="fa fa-plus-square"></i><span>Cadastro
+									Vinho</span></a></li>
 
 						<!-- <li class="aw-menu__item" sec:authorize="hasRole('ROLE_PESQUISAR_VINHO')">
 							<a th:href="@{/vinhos}"><i class="fa fa-search-plus"></i>
@@ -106,13 +106,12 @@
 
 
 						<li class="aw-menu__item"
-							sec:authorize="hasRole('ROLE_CADASTRAR_VINHO')"><a
-							th:href="@{/alunos/novo}"><i class="fa fa-users"></i><span>Cadastro
-									Aluno</span></a></li>
+							sec:authorize="hasRole('ROLE_CADASTRAR_VINHO')">
+							<a th:href="@{/produtos/novo}"><i class="fa fa-cart-plus"></i><span>Cadastro Produto</span></a></li>
 
 
 						<li class="aw-menu__item"><a th:href="@{/logout}"><i
-								class="fa fa-sign-in"></i><span>Sair</span></a></li>
+								class="fa fa-sign-out"></i><span>Sair</span></a></li>
 
 					</ul>
 
@@ -139,11 +138,15 @@
 	<script th:src="@{/layout/javascripts/algaworks.min.js}"></script>
 	<script th:src="@{/javascripts/venders/jquery.masknumber.min.js}"></script>
 
+
 	<script>
 		$('.js-money').maskNumber({
 			decimal : ',',
 			thousands : '.'
 		});
+		
+		$('.js-qtd').maskNumber({integer: true, thousands: '.'});
+		
 	</script>
 
 	<th:block layout:fragment="javascript-extra"></th:block>
